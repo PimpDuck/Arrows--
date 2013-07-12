@@ -31,14 +31,14 @@ public class ArrowsPlus extends JavaPlugin implements Listener {
         recipe.shape(new String[] { "s", "c" }).setIngredient('s', Material.ARROW).setIngredient('c', Material.COAL);
         this.getServer().addRecipe(recipe);
         
-        log.info("[Arrows+] Verison 1.0 has been enabled!");
+        log.info("[ArrowsPlus] Verison 1.0 has been enabled!");
 
         getServer().getPluginManager().registerEvents(this, this);
     }
     
     @Override
     public void onDisable(){
-        log.info("[Arrows+] Verison 1.0 has been disabled!");
+        log.info("[ArrowsPlus] Verison 1.0 has been disabled!");
     }
 
     @EventHandler
@@ -70,7 +70,6 @@ public class ArrowsPlus extends JavaPlugin implements Listener {
 
         if (player.getInventory().contains(Material.TNT, 1) && player.getInventory().contains(Material.ARROW, 1)) {
             arrow.getWorld().createExplosion(arrow.getLocation(), 2.5f);
-        	arrow.setBounce(false);
 
             
             player.getInventory().removeItem(new ItemStack(Material.TNT, 1));
@@ -82,4 +81,4 @@ public class ArrowsPlus extends JavaPlugin implements Listener {
         	player.getInventory().removeItem(new ItemStack(Material.BLAZE_ROD, 1));
         }
     }
-   }
+}
