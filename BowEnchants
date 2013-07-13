@@ -1,0 +1,1067 @@
+package me.PimpDuck.ArrowsPlus;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import org.bukkit.ChatColor;
+import org.bukkit.Color;
+import org.bukkit.FireworkEffect;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Arrow;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.entity.ThrownPotion;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityShootBowEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Vector;
+
+public class BowEnchants
+  implements Listener, CommandExecutor
+{
+  private ArrowsPlus plugin;
+  final FireworkEffectPlayer fplayer = new FireworkEffectPlayer();
+
+  public BowEnchants(ArrowsPlus instance)
+  {
+    this.plugin = instance;
+  }
+
+  public boolean onCommand(CommandSender sender, Command command, String commandLabel, String[] args)
+  {
+    if ((sender instanceof Player))
+    {
+      if (((Player)sender).getItemInHand().getType() == Material.BOW)
+      {
+        if (command.getName().equalsIgnoreCase("arrowsplus"))
+        {
+          Player player = (Player)sender;
+          ItemMeta im = player.getItemInHand().getItemMeta();
+          List l = new ArrayList();
+          l.addAll(im.getLore() != null ? im.getLore() : Collections.EMPTY_LIST);
+
+          if (args.length == 0) {
+            sender.sendMessage(ChatColor.DARK_RED + "[ArrowsPlus] " + ChatColor.GREEN + "Please specify an enchantment name! Examples: firework, explosion, lightning, slowness, poison...");
+          }
+
+          if (args.length > 0)
+          {
+            if (args[0].equalsIgnoreCase("firework")) {
+              if (args.length > 1)
+              {
+                if (args[1].equalsIgnoreCase("red")) {
+                  if ((sender.hasPermission("arrowsplus.*")) || (sender.hasPermission("arrowsplus.firework.red")))
+                  {
+                    l.add(ChatColor.GRAY + "Firework I");
+                    sender.sendMessage(ChatColor.DARK_RED + "[ArrowsPlus] " + ChatColor.GREEN + "Enchantment added to your bow!");
+                  }
+                  else {
+                    sender.sendMessage(ChatColor.DARK_RED + "[ArrowsPlus] " + ChatColor.RED + "You dont have the permission to do this!");
+                  }
+                }
+                else if (args[1].equalsIgnoreCase("blue")) {
+                  if ((sender.hasPermission("arrowsplus.*")) || (sender.hasPermission("arrowsplus.firework.blue")))
+                  {
+                    l.add(ChatColor.GRAY + "Firework II");
+                    sender.sendMessage(ChatColor.DARK_RED + "[ArrowsPlus] " + ChatColor.GREEN + "Enchantment added to your bow!");
+                  }
+                  else {
+                    sender.sendMessage(ChatColor.DARK_RED + "[ArrowsPlus] " + ChatColor.RED + "You dont have the permission to do this!");
+                  }
+                }
+                else if (args[1].equalsIgnoreCase("green")) {
+                  if ((sender.hasPermission("arrowsplus.*")) || (sender.hasPermission("arrowsplus.firework.green")))
+                  {
+                    l.add(ChatColor.GRAY + "Firework III");
+                    sender.sendMessage(ChatColor.DARK_RED + "[ArrowsPlus] " + ChatColor.GREEN + "Enchantment added to your bow!");
+                  }
+                  else {
+                    sender.sendMessage(ChatColor.DARK_RED + "[ArrowsPlus] " + ChatColor.RED + "You dont have the permission to do this!");
+                  }
+                }
+                else if (args[1].equalsIgnoreCase("aqua")) {
+                  if ((sender.hasPermission("arrowsplus.*")) || (sender.hasPermission("arrowsplus.firework.aqua")))
+                  {
+                    l.add(ChatColor.GRAY + "Firework IV");
+                    sender.sendMessage(ChatColor.DARK_RED + "[ArrowsPlus] " + ChatColor.GREEN + "Enchantment added to your bow!");
+                  }
+                  else {
+                    sender.sendMessage(ChatColor.DARK_RED + "[ArrowsPlus] " + ChatColor.RED + "You dont have the permission to do this!");
+                  }
+                }
+                else if (args[1].equalsIgnoreCase("pink")) {
+                  if ((sender.hasPermission("arrowsplus.*")) || (sender.hasPermission("arrowsplus.firework.pink")))
+                  {
+                    l.add(ChatColor.GRAY + "Firework V");
+                    sender.sendMessage(ChatColor.DARK_RED + "[ArrowsPlus] " + ChatColor.GREEN + "Enchantment added to your bow!");
+                  }
+                  else {
+                    sender.sendMessage(ChatColor.DARK_RED + "[ArrowsPlus] " + ChatColor.RED + "You dont have the permission to do this!");
+                  }
+                }
+                else if (args[1].equalsIgnoreCase("white")) {
+                  if ((sender.hasPermission("arrowsplus.*")) || (sender.hasPermission("arrowsplus.firework.white")))
+                  {
+                    l.add(ChatColor.GRAY + "Firework VI");
+                    sender.sendMessage(ChatColor.DARK_RED + "[ArrowsPlus] " + ChatColor.GREEN + "Enchantment added to your bow!");
+                  }
+                  else {
+                    sender.sendMessage(ChatColor.DARK_RED + "[ArrowsPlus] " + ChatColor.RED + "You dont have the permission to do this!");
+                  }
+                }
+                else if (args[1].equalsIgnoreCase("black")) {
+                  if ((sender.hasPermission("arrowsplus.*")) || (sender.hasPermission("arrowsplus.firework.black")))
+                  {
+                    l.add(ChatColor.GRAY + "Firework VII");
+                    sender.sendMessage(ChatColor.DARK_RED + "[ArrowsPlus] " + ChatColor.GREEN + "Enchantment added to your bow!");
+                  }
+                  else {
+                    sender.sendMessage(ChatColor.DARK_RED + "[ArrowsPlus] " + ChatColor.RED + "You dont have the permission to do this!");
+                  }
+                }
+                else if (args[1].equalsIgnoreCase("yellow")) {
+                  if ((sender.hasPermission("arrowsplus.*")) || (sender.hasPermission("arrowsplus.firework.yellow")))
+                  {
+                    l.add(ChatColor.GRAY + "Firework IIX");
+                    sender.sendMessage(ChatColor.DARK_RED + "[ArrowsPlus] " + ChatColor.GREEN + "Enchantment added to your bow!");
+                  }
+                  else {
+                    sender.sendMessage(ChatColor.DARK_RED + "[ArrowsPlus] " + ChatColor.RED + "You dont have the permission to do this!");
+                  }
+                }
+                else
+                {
+                  sender.sendMessage(ChatColor.DARK_RED + "[ArrowsPlus] " + ChatColor.GREEN + "Can't find that color! Examples: yellow, black, white, pink, aqua, green, blue or red...");
+                }
+              }
+              else
+              {
+                sender.sendMessage(ChatColor.DARK_RED + "[ArrowsPlus] " + ChatColor.GREEN + "Please specify a color! Examples: yellow, black, white, pink, aqua, green, blue or red...");
+              }
+            }
+            else if (args[0].equalsIgnoreCase("explosion")) {
+              if (args.length > 1) {
+                if (args[1].equalsIgnoreCase("small")) {
+                  if ((sender.hasPermission("arrowsplus.*")) || (sender.hasPermission("arrowsplus.explosion.small")))
+                  {
+                    l.add(ChatColor.GRAY + "Explosion I");
+                    sender.sendMessage(ChatColor.DARK_RED + "[ArrowsPlus] " + ChatColor.GREEN + "Enchantment added to your bow!");
+                  }
+                  else {
+                    sender.sendMessage(ChatColor.DARK_RED + "[ArrowsPlus] " + ChatColor.RED + "You dont have the permission to do this!");
+                  }
+                }
+                else if (args[1].equalsIgnoreCase("normal")) {
+                  if ((sender.hasPermission("arrowsplus.*")) || (sender.hasPermission("arrowsplus.explosion.normal")))
+                  {
+                    l.add(ChatColor.GRAY + "Explosion II");
+                    sender.sendMessage(ChatColor.DARK_RED + "[ArrowsPlus] " + ChatColor.GREEN + "Enchantment added to your bow!");
+                  }
+                  else {
+                    sender.sendMessage(ChatColor.DARK_RED + "[ArrowsPlus] " + ChatColor.RED + "You dont have the permission to do this!");
+                  }
+                }
+                else if (args[1].equalsIgnoreCase("big")) {
+                  if ((sender.hasPermission("arrowsplus.*")) || (sender.hasPermission("arrowsplus.explosion.big")))
+                  {
+                    l.add(ChatColor.GRAY + "Explosion III");
+                    sender.sendMessage(ChatColor.DARK_RED + "[ArrowsPlus] " + ChatColor.GREEN + "Enchantment added to your bow!");
+                  }
+                  else {
+                    sender.sendMessage(ChatColor.DARK_RED + "[ArrowsPlus] " + ChatColor.RED + "You dont have the permission to do this!");
+                  }
+                }
+              }
+              else
+              {
+                sender.sendMessage(ChatColor.DARK_RED + "[ArrowsPlus] " + ChatColor.GREEN + "Please specify the size! Examples: small, normal or big...");
+              }
+            }
+            else if (args[0].equalsIgnoreCase("lightning")) {
+              if ((sender.hasPermission("arrowsplus.*")) || (sender.hasPermission("arrowsplus.lightning")))
+              {
+                l.add(ChatColor.GRAY + "Lightning Strike I");
+                sender.sendMessage(ChatColor.DARK_RED + "[ArrowsPlus] " + ChatColor.GREEN + "Enchantment added to your bow!");
+              }
+              else {
+                sender.sendMessage(ChatColor.DARK_RED + "[ArrowsPlus] " + ChatColor.RED + "You dont have the permission to do this!");
+              }
+            }
+            else if (args[0].equalsIgnoreCase("poison")) {
+              if ((sender.hasPermission("arrowsplus.*")) || (sender.hasPermission("arrowsplus.poison")))
+              {
+                l.add(ChatColor.GRAY + "Toxic Arrow I");
+                sender.sendMessage(ChatColor.DARK_RED + "[ArrowsPlus] " + ChatColor.GREEN + "Enchantment added to your bow!");
+              }
+              else {
+                sender.sendMessage(ChatColor.DARK_RED + "[ArrowsPlus] " + ChatColor.RED + "You dont have the permission to do this!");
+              }
+            }
+            else if (args[0].equalsIgnoreCase("slowness")) {
+              if ((sender.hasPermission("arrowsplus.*")) || (sender.hasPermission("arrowsplus.slowness")))
+              {
+                l.add(ChatColor.GRAY + "Slowness Arrow I");
+                sender.sendMessage(ChatColor.DARK_RED + "[ArrowsPlus] " + ChatColor.GREEN + "Enchantment added to your bow!");
+              }
+              else {
+                sender.sendMessage(ChatColor.DARK_RED + "[ArrowsPlus] " + ChatColor.RED + "You dont have the permission to do this!");
+              }
+            }
+            else
+            {
+              sender.sendMessage(ChatColor.DARK_RED + "[ArrowsPlus] " + ChatColor.GREEN + "Can't find enchantment!");
+            }
+          }
+          im.setLore(l);
+          player.getItemInHand().setItemMeta(im);
+          return true;
+        }
+
+        Player player = (Player)sender;
+        ItemMeta im = player.getItemInHand().getItemMeta();
+      }
+      else
+      {
+        sender.sendMessage(ChatColor.DARK_RED + "[ArrowsPlus] " + ChatColor.GREEN + "You can only bind ArrowsPlus enchantments to a bow!");
+      }
+    }
+    else {
+      sender.sendMessage(ChatColor.DARK_RED + "[ArrowsPlus] " + ChatColor.GREEN + "Only players can bind ArrowsPlus enchantments to a bow!");
+    }
+    return true;
+  }
+
+  @EventHandler(priority=EventPriority.HIGHEST)
+  public void ShootArrow(EntityShootBowEvent event)
+  {
+    final LivingEntity player = event.getEntity();
+
+    if ((player instanceof Player))
+    {
+      Material im = ((Player)player).getItemInHand().getType();
+
+      if (!(event.getProjectile() instanceof Arrow))
+      {
+        return;
+      }
+      final Arrow arrow = (Arrow)event.getProjectile();
+
+      if (((Player)player).getItemInHand().getItemMeta() != null)
+      {
+        if ((((Player)player).getItemInHand().getItemMeta().getLore() != null) && (!((Player)player).getItemInHand().getItemMeta().getLore().isEmpty()))
+        {
+          if (((Player)player).getItemInHand().getItemMeta().getLore().contains(ChatColor.GRAY + "Firework IV"))
+          {
+            new BukkitRunnable()
+            {
+              private Location oldLocation;
+              private int timer = 100;
+
+              public final void run()
+              {
+                if ((this.timer-- <= 0) || (!arrow.isValid()))
+                {
+                  cancel();
+                }
+                else if (this.oldLocation == null)
+                {
+                  this.oldLocation = arrow.getLocation();
+                }
+                else
+                {
+                  Location newLoc = arrow.getLocation();
+
+                  if (this.oldLocation.toVector().equals(
+                    newLoc.toVector()))
+                  {
+                    cancel();
+                  }
+                  this.oldLocation = newLoc;
+                }
+
+                if (this.oldLocation != null)
+                {
+                  try
+                  {
+                    BowEnchants.this.fplayer.playFirework(
+                      arrow.getWorld(), 
+                      arrow.getLocation(), 
+                      FireworkEffect.builder()
+                      .with(FireworkEffect.Type.BURST)
+                      .withColor(Color.AQUA)
+                      .withFade(Color.AQUA)
+                      .build());
+                  }
+                  catch (IllegalArgumentException e)
+                  {
+                    e.printStackTrace();
+                  }
+                  catch (Exception e)
+                  {
+                    e.printStackTrace();
+                  }
+                }
+              }
+            }
+            .runTaskTimer(this.plugin, 2L, 4L);
+          }
+
+          if (((Player)player).getItemInHand().getItemMeta().getLore().contains(ChatColor.GRAY + "Firework IIX"))
+          {
+            new BukkitRunnable()
+            {
+              private Location oldLocation;
+              private int timer = 100;
+
+              public final void run()
+              {
+                if ((this.timer-- <= 0) || (!arrow.isValid()))
+                {
+                  cancel();
+                }
+                else if (this.oldLocation == null)
+                {
+                  this.oldLocation = arrow.getLocation();
+                }
+                else
+                {
+                  Location newLoc = arrow.getLocation();
+
+                  if (this.oldLocation.toVector().equals(
+                    newLoc.toVector()))
+                  {
+                    cancel();
+                  }
+                  this.oldLocation = newLoc;
+                }
+
+                if (this.oldLocation != null)
+                {
+                  try
+                  {
+                    BowEnchants.this.fplayer.playFirework(
+                      arrow.getWorld(), 
+                      arrow.getLocation(), 
+                      FireworkEffect.builder()
+                      .with(FireworkEffect.Type.BURST)
+                      .withColor(Color.YELLOW)
+                      .withFade(Color.YELLOW)
+                      .build());
+                  }
+                  catch (IllegalArgumentException e)
+                  {
+                    e.printStackTrace();
+                  }
+                  catch (Exception e)
+                  {
+                    e.printStackTrace();
+                  }
+                }
+              }
+            }
+            .runTaskTimer(this.plugin, 2L, 4L);
+          }
+
+          if (((Player)player).getItemInHand().getItemMeta().getLore().contains(ChatColor.GRAY + "Firework_ORANGE"))
+          {
+            new BukkitRunnable()
+            {
+              private Location oldLocation;
+              private int timer = 100;
+
+              public final void run()
+              {
+                if ((this.timer-- <= 0) || (!arrow.isValid()))
+                {
+                  cancel();
+                }
+                else if (this.oldLocation == null)
+                {
+                  this.oldLocation = arrow.getLocation();
+                }
+                else
+                {
+                  Location newLoc = arrow.getLocation();
+
+                  if (this.oldLocation.toVector().equals(
+                    newLoc.toVector()))
+                  {
+                    cancel();
+                  }
+                  this.oldLocation = newLoc;
+                }
+
+                if (this.oldLocation != null)
+                {
+                  try
+                  {
+                    BowEnchants.this.fplayer.playFirework(
+                      arrow.getWorld(), 
+                      arrow.getLocation(), 
+                      FireworkEffect.builder()
+                      .with(FireworkEffect.Type.BURST)
+                      .withColor(Color.ORANGE)
+                      .withFade(Color.ORANGE)
+                      .build());
+                  }
+                  catch (IllegalArgumentException e)
+                  {
+                    e.printStackTrace();
+                  }
+                  catch (Exception e)
+                  {
+                    e.printStackTrace();
+                  }
+                }
+              }
+            }
+            .runTaskTimer(this.plugin, 2L, 4L);
+          }
+          if (((Player)player).getItemInHand().getItemMeta().getLore().contains(ChatColor.GRAY + "Firework VII"))
+          {
+            new BukkitRunnable()
+            {
+              private Location oldLocation;
+              private int timer = 100;
+
+              public final void run()
+              {
+                if ((this.timer-- <= 0) || (!arrow.isValid()))
+                {
+                  cancel();
+                }
+                else if (this.oldLocation == null)
+                {
+                  this.oldLocation = arrow.getLocation();
+                }
+                else
+                {
+                  Location newLoc = arrow.getLocation();
+
+                  if (this.oldLocation.toVector().equals(
+                    newLoc.toVector()))
+                  {
+                    cancel();
+                  }
+                  this.oldLocation = newLoc;
+                }
+
+                if (this.oldLocation != null)
+                {
+                  try
+                  {
+                    BowEnchants.this.fplayer.playFirework(
+                      arrow.getWorld(), 
+                      arrow.getLocation(), 
+                      FireworkEffect.builder()
+                      .with(FireworkEffect.Type.BURST)
+                      .withColor(Color.BLACK)
+                      .withFade(Color.BLACK)
+                      .build());
+                  }
+                  catch (IllegalArgumentException e)
+                  {
+                    e.printStackTrace();
+                  }
+                  catch (Exception e)
+                  {
+                    e.printStackTrace();
+                  }
+                }
+              }
+            }
+            .runTaskTimer(this.plugin, 2L, 4L);
+          }
+
+          if (((Player)player).getItemInHand().getItemMeta().getLore().contains(ChatColor.GRAY + "Slowness Arrow I"))
+          {
+            new BukkitRunnable()
+            {
+              private Location oldLocation;
+              private int timer = 100;
+
+              public final void run()
+              {
+                if ((this.timer-- <= 0) || (!arrow.isValid()))
+                {
+                  Location loc = arrow.getLocation();
+                  ThrownPotion proj = (ThrownPotion)loc.getWorld().spawn(loc, ThrownPotion.class);
+                  proj.getEffects().add(new PotionEffect(PotionEffectType.SLOW, 100, 50));
+                  ItemStack item = proj.getItem();
+                  proj.setShooter(player);
+                  proj.setItem(item);
+                  proj.setVelocity(new Vector(0, -10, 0));
+                  Location location = arrow.getLocation();
+                  for (Entity e : BowEnchants.this.getEntitiesNearLocation(location, 2))
+                  {
+                    if ((e instanceof LivingEntity))
+                    {
+                      ((LivingEntity)e)
+                        .addPotionEffect(new PotionEffect(
+                        PotionEffectType.SLOW, 150, 50));
+                    }
+                  }
+                  cancel();
+                }
+                else if (this.oldLocation == null)
+                {
+                  this.oldLocation = arrow.getLocation();
+                }
+                else
+                {
+                  Location newLoc = arrow.getLocation();
+
+                  if (this.oldLocation.toVector().equals(
+                    newLoc.toVector()))
+                  {
+                    Location loc = arrow.getLocation();
+                    ThrownPotion proj = (ThrownPotion)loc.getWorld().spawn(loc, ThrownPotion.class);
+                    proj.getEffects().add(new PotionEffect(PotionEffectType.SLOW, 150, 50));
+                    ItemStack item = proj.getItem();
+                    proj.setShooter(player);
+                    proj.setItem(item);
+                    proj.setVelocity(new Vector(0, -10, 0));
+                    Location location = arrow.getLocation();
+                    for (Entity e : BowEnchants.this.getEntitiesNearLocation(location, 2))
+                    {
+                      if ((e instanceof LivingEntity))
+                      {
+                        ((LivingEntity)e)
+                          .addPotionEffect(new PotionEffect(
+                          PotionEffectType.SLOW, 150, 50));
+                      }
+                    }
+                    cancel();
+                  }
+                  this.oldLocation = newLoc;
+                }
+
+              }
+
+            }
+
+            .runTaskTimer(this.plugin, 0L, 1L);
+          }
+
+          if (((Player)player).getItemInHand().getItemMeta().getLore().contains(ChatColor.GRAY + "Firework III"))
+          {
+            new BukkitRunnable()
+            {
+              private Location oldLocation;
+              private int timer = 100;
+
+              public final void run()
+              {
+                if ((this.timer-- <= 0) || (!arrow.isValid()))
+                {
+                  cancel();
+                }
+                else if (this.oldLocation == null)
+                {
+                  this.oldLocation = arrow.getLocation();
+                }
+                else
+                {
+                  Location newLoc = arrow.getLocation();
+
+                  if (this.oldLocation.toVector().equals(
+                    newLoc.toVector()))
+                  {
+                    cancel();
+                  }
+                  this.oldLocation = newLoc;
+                }
+
+                if (this.oldLocation != null)
+                {
+                  try
+                  {
+                    BowEnchants.this.fplayer.playFirework(
+                      arrow.getWorld(), 
+                      arrow.getLocation(), 
+                      FireworkEffect.builder()
+                      .with(FireworkEffect.Type.BURST)
+                      .withColor(Color.GREEN)
+                      .withFade(Color.GREEN)
+                      .build());
+                  }
+                  catch (IllegalArgumentException e)
+                  {
+                    e.printStackTrace();
+                  }
+                  catch (Exception e)
+                  {
+                    e.printStackTrace();
+                  }
+                }
+              }
+            }
+            .runTaskTimer(this.plugin, 2L, 4L);
+          }
+
+          if (((Player)player).getItemInHand().getItemMeta().getLore().contains(ChatColor.GRAY + "Explosion I"))
+          {
+            new BukkitRunnable()
+            {
+              private Location oldLocation;
+              private int timer = 100;
+
+              public final void run()
+              {
+                if ((this.timer-- <= 0) || (!arrow.isValid()))
+                {
+                  arrow.getWorld().createExplosion(arrow.getLocation(), 2.0F);
+                  arrow.remove();
+                  cancel();
+                }
+                else if (this.oldLocation == null)
+                {
+                  this.oldLocation = arrow.getLocation();
+                }
+                else
+                {
+                  Location newLoc = arrow.getLocation();
+
+                  if (this.oldLocation.toVector().equals(
+                    newLoc.toVector()))
+                  {
+                    arrow.getWorld().createExplosion(arrow.getLocation(), 2.0F);
+                    arrow.remove();
+                    cancel();
+                  }
+                  this.oldLocation = newLoc;
+                }
+
+              }
+
+            }
+
+            .runTaskTimer(this.plugin, 0L, 1L);
+          }
+          if (((Player)player).getItemInHand().getItemMeta().getLore().contains(ChatColor.GRAY + "Explosion II"))
+          {
+            new BukkitRunnable()
+            {
+              private Location oldLocation;
+              private int timer = 100;
+
+              public final void run()
+              {
+                if ((this.timer-- <= 0) || (!arrow.isValid()))
+                {
+                  arrow.getWorld().createExplosion(arrow.getLocation(), 4.0F);
+                  arrow.remove();
+                  cancel();
+                }
+                else if (this.oldLocation == null)
+                {
+                  this.oldLocation = arrow.getLocation();
+                }
+                else
+                {
+                  Location newLoc = arrow.getLocation();
+
+                  if (this.oldLocation.toVector().equals(
+                    newLoc.toVector()))
+                  {
+                    arrow.getWorld().createExplosion(arrow.getLocation(), 4.0F);
+                    arrow.remove();
+                    cancel();
+                  }
+                  this.oldLocation = newLoc;
+                }
+
+              }
+
+            }
+
+            .runTaskTimer(this.plugin, 0L, 1L);
+          }
+
+          if (((Player)player).getItemInHand().getItemMeta().getLore().contains(ChatColor.GRAY + "Lightning Arrow I"))
+          {
+            new BukkitRunnable()
+            {
+              private Location oldLocation;
+              private int timer = 100;
+
+              public final void run()
+              {
+                if ((this.timer-- <= 0) || (!arrow.isValid()))
+                {
+                  arrow.getWorld().strikeLightning(arrow.getLocation());
+                  cancel();
+                }
+                else if (this.oldLocation == null)
+                {
+                  this.oldLocation = arrow.getLocation();
+                }
+                else
+                {
+                  Location newLoc = arrow.getLocation();
+
+                  if (this.oldLocation.toVector().equals(
+                    newLoc.toVector()))
+                  {
+                    arrow.getWorld().strikeLightning(arrow.getLocation());
+                    cancel();
+                  }
+                  this.oldLocation = newLoc;
+                }
+
+              }
+
+            }
+
+            .runTaskTimer(this.plugin, 0L, 1L);
+          }
+
+          if (((Player)player).getItemInHand().getItemMeta().getLore().contains(ChatColor.GRAY + "Poison Arrow I"))
+          {
+            new BukkitRunnable()
+            {
+              private Location oldLocation;
+              private int timer = 100;
+
+              public final void run()
+              {
+                if ((this.timer-- <= 0) || (!arrow.isValid()))
+                {
+                  Location location = arrow.getLocation();
+                  for (Entity e : BowEnchants.this.getEntitiesNearLocation(location, 2))
+                  {
+                    if ((e instanceof LivingEntity))
+                    {
+                      ((LivingEntity)e)
+                        .addPotionEffect(new PotionEffect(
+                        PotionEffectType.POISON, 100, 2));
+                    }
+                  }
+                  cancel();
+                }
+                else if (this.oldLocation == null)
+                {
+                  this.oldLocation = arrow.getLocation();
+                }
+                else
+                {
+                  Location newLoc = arrow.getLocation();
+
+                  if (this.oldLocation.toVector().equals(
+                    newLoc.toVector()))
+                  {
+                    Location location = arrow.getLocation();
+                    for (Entity e : BowEnchants.this.getEntitiesNearLocation(location, 2))
+                    {
+                      if ((e instanceof LivingEntity))
+                      {
+                        ((LivingEntity)e)
+                          .addPotionEffect(new PotionEffect(
+                          PotionEffectType.POISON, 100, 2));
+                      }
+                    }
+                    cancel();
+                  }
+                  this.oldLocation = newLoc;
+                }
+
+              }
+
+            }
+
+            .runTaskTimer(this.plugin, 0L, 1L);
+          }
+
+          if (((Player)player).getItemInHand().getItemMeta().getLore().contains(ChatColor.GRAY + "Explosion III"))
+          {
+            new BukkitRunnable()
+            {
+              private Location oldLocation;
+              private int timer = 100;
+
+              public final void run()
+              {
+                if ((this.timer-- <= 0) || (!arrow.isValid()))
+                {
+                  arrow.getWorld().createExplosion(arrow.getLocation(), 8.0F);
+                  arrow.remove();
+                  cancel();
+                }
+                else if (this.oldLocation == null)
+                {
+                  this.oldLocation = arrow.getLocation();
+                }
+                else
+                {
+                  Location newLoc = arrow.getLocation();
+
+                  if (this.oldLocation.toVector().equals(
+                    newLoc.toVector()))
+                  {
+                    arrow.getWorld().createExplosion(arrow.getLocation(), 8.0F);
+                    arrow.remove();
+                    cancel();
+                  }
+                  this.oldLocation = newLoc;
+                }
+
+              }
+
+            }
+
+            .runTaskTimer(this.plugin, 0L, 1L);
+          }
+
+          if (((Player)player).getItemInHand().getItemMeta().getLore().contains(ChatColor.GRAY + "Firework V"))
+          {
+            new BukkitRunnable()
+            {
+              private Location oldLocation;
+              private int timer = 100;
+
+              public final void run()
+              {
+                if ((this.timer-- <= 0) || (!arrow.isValid()))
+                {
+                  cancel();
+                }
+                else if (this.oldLocation == null)
+                {
+                  this.oldLocation = arrow.getLocation();
+                }
+                else
+                {
+                  Location newLoc = arrow.getLocation();
+
+                  if (this.oldLocation.toVector().equals(
+                    newLoc.toVector()))
+                  {
+                    cancel();
+                  }
+                  this.oldLocation = newLoc;
+                }
+
+                if (this.oldLocation != null)
+                {
+                  try
+                  {
+                    BowEnchants.this.fplayer.playFirework(
+                      arrow.getWorld(), 
+                      arrow.getLocation(), 
+                      FireworkEffect.builder()
+                      .with(FireworkEffect.Type.BURST)
+                      .withColor(Color.PURPLE)
+                      .withFade(Color.PURPLE)
+                      .build());
+                  }
+                  catch (IllegalArgumentException e)
+                  {
+                    e.printStackTrace();
+                  }
+                  catch (Exception e)
+                  {
+                    e.printStackTrace();
+                  }
+                }
+              }
+            }
+            .runTaskTimer(this.plugin, 2L, 4L);
+          }
+          if (((Player)player).getItemInHand().getItemMeta().getLore().contains(ChatColor.GRAY + "Firework VI"))
+          {
+            new BukkitRunnable()
+            {
+              private Location oldLocation;
+              private int timer = 100;
+
+              public final void run()
+              {
+                if ((this.timer-- <= 0) || (!arrow.isValid()))
+                {
+                  cancel();
+                }
+                else if (this.oldLocation == null)
+                {
+                  this.oldLocation = arrow.getLocation();
+                }
+                else
+                {
+                  Location newLoc = arrow.getLocation();
+
+                  if (this.oldLocation.toVector().equals(
+                    newLoc.toVector()))
+                  {
+                    cancel();
+                  }
+                  this.oldLocation = newLoc;
+                }
+
+                if (this.oldLocation != null)
+                {
+                  try
+                  {
+                    BowEnchants.this.fplayer.playFirework(
+                      arrow.getWorld(), 
+                      arrow.getLocation(), 
+                      FireworkEffect.builder()
+                      .with(FireworkEffect.Type.BURST)
+                      .withColor(Color.WHITE)
+                      .withFade(Color.WHITE)
+                      .build());
+                  }
+                  catch (IllegalArgumentException e)
+                  {
+                    e.printStackTrace();
+                  }
+                  catch (Exception e)
+                  {
+                    e.printStackTrace();
+                  }
+                }
+              }
+            }
+            .runTaskTimer(this.plugin, 2L, 4L);
+          }
+
+          if (((Player)player).getItemInHand().getItemMeta().getLore().contains(ChatColor.GRAY + "Firework II"))
+          {
+            new BukkitRunnable()
+            {
+              private Location oldLocation;
+              private int timer = 100;
+
+              public final void run()
+              {
+                if ((this.timer-- <= 0) || (!arrow.isValid()))
+                {
+                  cancel();
+                }
+                else if (this.oldLocation == null)
+                {
+                  this.oldLocation = arrow.getLocation();
+                }
+                else
+                {
+                  Location newLoc = arrow.getLocation();
+
+                  if (this.oldLocation.toVector().equals(
+                    newLoc.toVector()))
+                  {
+                    cancel();
+                  }
+                  this.oldLocation = newLoc;
+                }
+
+                if (this.oldLocation != null)
+                {
+                  try
+                  {
+                    BowEnchants.this.fplayer.playFirework(
+                      arrow.getWorld(), 
+                      arrow.getLocation(), 
+                      FireworkEffect.builder()
+                      .with(FireworkEffect.Type.BURST)
+                      .withColor(Color.BLUE)
+                      .withFade(Color.BLUE)
+                      .build());
+                  }
+                  catch (IllegalArgumentException e)
+                  {
+                    e.printStackTrace();
+                  }
+                  catch (Exception e)
+                  {
+                    e.printStackTrace();
+                  }
+                }
+              }
+            }
+            .runTaskTimer(this.plugin, 2L, 4L);
+          }
+
+          if (((Player)player).getItemInHand().getItemMeta().getLore().contains(ChatColor.GRAY + "Firework I"))
+          {
+            new BukkitRunnable()
+            {
+              private Location oldLocation;
+              private int timer = 100;
+
+              public final void run()
+              {
+                if ((this.timer-- <= 0) || (!arrow.isValid()))
+                {
+                  cancel();
+                }
+                else if (this.oldLocation == null)
+                {
+                  this.oldLocation = arrow.getLocation();
+                }
+                else
+                {
+                  Location newLoc = arrow.getLocation();
+
+                  if (this.oldLocation.toVector().equals(
+                    newLoc.toVector()))
+                  {
+                    cancel();
+                  }
+                  this.oldLocation = newLoc;
+                }
+
+                if (this.oldLocation != null)
+                {
+                  try
+                  {
+                    BowEnchants.this.fplayer.playFirework(
+                      arrow.getWorld(), 
+                      arrow.getLocation(), 
+                      FireworkEffect.builder()
+                      .with(FireworkEffect.Type.BURST)
+                      .withColor(Color.RED)
+                      .withFade(Color.RED)
+                      .build());
+                  }
+                  catch (IllegalArgumentException e)
+                  {
+                    e.printStackTrace();
+                  }
+                  catch (Exception e)
+                  {
+                    e.printStackTrace();
+                  }
+                }
+              }
+            }
+            .runTaskTimer(this.plugin, 2L, 4L);
+          }
+        }
+      }
+    }
+  }
+
+  public List<Entity> getEntitiesNearLocation(Location loc, int radius)
+  {
+    List r = new ArrayList();
+    int rs = radius * radius;
+    Location tmp = new Location(loc.getWorld(), 0.0D, 0.0D, 0.0D);
+    for (Entity e : loc.getWorld().getEntities())
+    {
+      if (e.getLocation(tmp).distanceSquared(loc) < rs)
+      {
+        r.add(e);
+      }
+    }
+    return r;
+  }
+}
