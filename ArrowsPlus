@@ -2,83 +2,44 @@ package me.PimpDuck.ArrowsPlus;
 
 import java.util.logging.Logger;
 
-import org.bukkit.Material;
-import org.bukkit.entity.Arrow;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Projectile;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityShootBowEvent;
-import org.bukkit.event.entity.ProjectileHitEvent;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.ShapedRecipe;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 
-public class ArrowsPlus extends JavaPlugin implements Listener {
-  
-    int bGrantedArrow = 0;
-    int bGrantedTNT = 0;
-    int bGrantedBlazeRod = 0;
-    
+public class ArrowsPlus extends JavaPlugin {
+
+    private BowEnchants BowEnchants = new BowEnchants(this);
+	
     Logger log = Logger.getLogger("Minecraft");
     
     @Override
     public void onEnable() {
-        // Define a new recipe and register it on the server.
-        ItemStack explodingArrow = new ItemStack(Material.TNT, 1);
-        ShapedRecipe recipe = new ShapedRecipe(explodingArrow);
-        recipe.shape(new String[] { "s", "c" }).setIngredient('s', Material.ARROW).setIngredient('c', Material.COAL);
-        this.getServer().addRecipe(recipe);
         
-        log.info("[ArrowsPlus] Verison 1.0 has been enabled!");
+        this.log.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        this.log.info("[ArrowsPlus] is now enabled!");
+        this.log.info("Copyright 2013 PimpDuck All rights reserved.");
+        this.log.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 
-        getServer().getPluginManager().registerEvents(this, this);
+        PluginManager pm = getServer().getPluginManager();
+        pm.registerEvents(this.BowEnchants, this);
+        saveConfig();
+        getCommand("arrowsplus").setExecutor(this.BowEnchants);
+        new BukkitRunnable()
+        {
+        	public void run(){
+                ArrowsPlus.this.saveConfig();
+        	}
+        }
+        .runTaskTimer(this, 6000L, 6000L);
     }
     
     @Override
     public void onDisable(){
-        log.info("[ArrowsPlus] Verison 1.0 has been disabled!");
-    }
-
-    @EventHandler
-    public void onEntityShootBow(EntityShootBowEvent event) {
-        this.bGrantedArrow = 0;
-    }
-
-    @EventHandler
-    public void onProjectileHit(ProjectileHitEvent event) {
-        Projectile projectile = event.getEntity();
-
-        Arrow arrow;
-        Player player;
-
-        // Only interested in arrows.
-        try {
-            arrow = (Arrow) projectile;
-        } catch (ClassCastException e) {
-            return;
+    	this.log.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        this.log.info("[ArrowsPlus] is now disabled!");
+        this.log.info("Copyright 2013 PimpDuck All rights reserved.");
+        this.log.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        saveConfig();
         }
-
-        // Only interested in players shooting.
-        try {
-            player = (Player) arrow.getShooter();
-        } catch (ClassCastException e) {
-            return;
-        }
-
-
-        if (player.getInventory().contains(Material.TNT, 1) && player.getInventory().contains(Material.ARROW, 1)) {
-            arrow.getWorld().createExplosion(arrow.getLocation(), 2.5f);
-
-            
-            player.getInventory().removeItem(new ItemStack(Material.TNT, 1));
-        }
-        if(player.getInventory().contains(Material.BLAZE_ROD, 1) && player.getInventory().contains(Material.ARROW, 1)) {
-        	arrow.getWorld().strikeLightning(arrow.getLocation());
-        	
-        	
-        	player.getInventory().removeItem(new ItemStack(Material.BLAZE_ROD, 1));
-        }
-    }
 }
